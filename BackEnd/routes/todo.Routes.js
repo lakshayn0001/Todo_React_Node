@@ -15,14 +15,14 @@ router.get('/',async(req,res)=>{
 })
 
 router.post('/',async(req,res)=>{
-
     try{
-    const [title,description] = await req.body;
+    const {title,description} = req.body;
      const todo=new Todo({title,description})
+     console.log(todo)
      await todo.save()
      res.status(201).json(todo)
     }catch(error){
-        res.status(500).send("Error to get data from user",error)
+        res.status(500).send("Error to get data from user",error.message)
     }
 })
 
