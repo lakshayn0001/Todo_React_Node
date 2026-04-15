@@ -3,27 +3,42 @@ import '../App.css'
 
 const Creating =(props)=>{
 
-    const [takeInput,setInput]=useState("")
-    
+const [takeInput,setInput]=useState({
+    title:"",
+    description:""
+}) 
 
 const handleInput=(e)=>{
-    setInput(e.target.value)
+    const {name,value}= e.target;
+    setInput((prev)=>({...prev,[name]:value}))
 }
 
 const handleData=()=>{
     props.sendData(takeInput)
-    setInput("")
+    setInput({
+        title:"",
+        description:""
+    })
 }
 
     return(
         <div>
             <div id="todo">
-                <input 
+                <div>
+                    <input 
                 onChange={(e)=>{handleInput(e)}}
-                placeholder="Enter your Item" 
+                placeholder="Enter the Title" 
                 type="text"
-                value={takeInput}
+                value={takeInput.title}
+                name="title"
                 />
+                <textarea
+                name='description'
+                onChange={(e)=>{handleInput(e)}}
+                placeholder='Enter the Description'
+                value={takeInput.description}
+                />
+                </div>
                  <button onClick={handleData} >Add</button>
             </div>
             

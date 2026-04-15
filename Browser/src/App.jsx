@@ -5,23 +5,31 @@ import './App.css'
 import { Creating } from './Todo_Creation/Creating'
 import TodoData from './Todo_Creation/TodoData'
 import { useEffect } from 'react'
+import axios from 'axios'
 
 function App() {
 
-const [data,setData]=useState(()=>{
-  const store=localStorage.getItem("todo")
-  return store ? JSON.parse(store): []
-})
 
-const handleData=(e)=>{
-  setData([...data,e])
+const handleData=async(e)=>{
+
+  console.log("getting data from frontend",{
+    title: e.title,
+    description: e.description
+  })
+
+  console.log("getting another data from frontend",e)
+  try{
+    await axios.post('http://localhost:4000/api/todo/',e)
+    alert("Todo has been added")
+  }catch(error){
+    alert("fail to add Todo on server",error)
+  }
+  
+
 }
 
-useEffect(()=>{
-  localStorage.setItem("todo",JSON.stringify(data))
-},[data])
 
-console.log(data)
+
   return (
     <>
     <div id='main_item'>
@@ -33,7 +41,7 @@ console.log(data)
   </div>
 
   <div>
-    <TodoData takeData={data}/>
+    <TodoData/>
   </div>
 </div>
     </>

@@ -1,16 +1,45 @@
 import { useState } from "react"
 import '../App.css'
+import axios from 'axios'
+import { useEffect } from "react"
 
-const TodoData=(props)=>{
+const TodoData=()=>{
+
+    const [api,setApi]=useState([])
+
+useEffect(()=>{
+    const data=async()=>{
+    try{
+        const res= await axios.get('http://localhost:4000/api/todo/')
+        setApi(res.data)
+    }
+    catch(error){
+        console.log("error to getting data from api")
+    }
+}
+data()
+
+},[api]) 
+
+const handleDelete=async(e)=>{
+    try{
+        console.log(e)
+        alert(`${e.title} has been deleted`)
+        await axios.delete(`http://localhost:4000/api/todo/${e._id}`)
+    }catch(error){
+        alert("Unable to delete the mention item",e.title)
+    }
+}
+
 
     return(
         <>
-        {props.takeData.map((value,index)=>(
+        {api.map((value,index)=>(
             <div  className="todo-container" key={index}>
-            <p>{value}</p>
+            <p>{value.title}</p>
             <div className="todo-buttons">
                 <button>Edit</button>
-                <button>Close</button>
+                <button onClick={()=>{handleDelete(value)}}>Close</button>
             </div>
         </div>
         ))}
