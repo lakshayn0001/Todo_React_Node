@@ -34,6 +34,8 @@ const handleDelete=async(e)=>{
 
     return(
         <>
+        {api ? 
+        <>
         {api.map((value,index)=>(
             <div  className="todo-container" key={index}>
             <p>{value.title}</p>
@@ -43,6 +45,8 @@ const handleDelete=async(e)=>{
             </div>
         </div>
         ))}
+        </>:"Loading"}
+        
         </>
     )
 }

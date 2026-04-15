@@ -24,10 +24,7 @@ const handleData=async(e)=>{
   }catch(error){
     alert("fail to add Todo on server",error)
   }
-  
-
 }
-
 
 
   return (
